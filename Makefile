@@ -3,8 +3,7 @@
 
 default: init
 
-init: cpenv download link build
-	mkdir -p output
+init: cpenv download link build createoutput
 
 cpenv:
 	cp -nf .env.example .env
@@ -32,11 +31,14 @@ build:
 
 link:
 	rm -rf $(NS3_DIR)/scratch
-	rm -rf $(NS3_DIR)/contrib
+	# rm -rf $(NS3_DIR)/contrib
 	ln -s $(shell pwd)/ns3_files/scratch $(NS3_DIR)/scratch
-	ln -s $(shell pwd)/ns3_files/contrib $(NS3_DIR)/contrib
+	# ln -s $(shell pwd)/ns3_files/contrib $(NS3_DIR)/contrib
 
-run-moving:
+createoutput:
+	mkdir -p ./output
+
+run-moving: createoutput
 	$(NS3_MOVING_BIN) \
 		--manager="ns3::MinstrelHtWifiManager" \
 		--managerName="mistrel-ht" \
@@ -46,9 +48,9 @@ run-moving:
 		--fuzzTime=1 \
 		--measurementsInterval=1 \
 		--lossModel=Nakagami \
-		--RngRun=100 \
-		--csvPath="./results_moving.csv" \
 		--tcpCongestionAlg="ns3::TcpWestwood" \
+		--RngRun=100 \
+		--csvPath="./output/moving.csv" \
 		--wallInterval=0 \
 		--wallLoss=0
 
@@ -59,8 +61,9 @@ run-stations:
 		--simulationTime=60 \
 		--warmupTime=5 \
 		--lossModel=Nakagami \
+		--tcpCongestionAlg="ns3::TcpWestwood" \
 		--RngRun=100 \
-		--csvPath="./results_stations.csv" \
+		--csvPath="./output/stations.csv" \
 		--mobilityModel=RWPM \
 		--nodeSpeed=10.0 \
 		--nodePause=5.0
