@@ -1,0 +1,10 @@
+{
+  // Specify project name
+  "name": "Development container - Ubuntu",
+  // Specify target compose.yml with configuration
+  "dockerComposeFile": "compose.yml",
+  // Specify container to attach to
+  "service": "devcontainer",
+  // Specify mounted directory
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
+}
