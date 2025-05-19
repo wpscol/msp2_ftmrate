@@ -144,6 +144,7 @@ int main(int argc, char* argv[]) {
   mobility.Install(wifiApNode);
   mobility.Install(wifiStaNode);
   wifiStaNode.Get(0)->GetObject<MobilityModel>()->SetPosition(Vector3D(startPosition, 0., 0.));
+  // wifiStaNode.Get(1)->GetObject<MobilityModel>()->SetPosition(Vector3D(startPosition, 0., .)); // 2m  AP <--> STA
 
   // Print position of each node
   std::cout << "Node positions:" << std::endl;
@@ -414,9 +415,9 @@ void InstallTrafficGenerator(Ptr<ns3::Node> fromNode, Ptr<ns3::Node> toNode, uin
   // Configure source and sink
   InetSocketAddress sinkSocket(addr, port);
   sinkSocket.SetTos(tosValue);
-  PacketSinkHelper packetSinkHelper("ns3::UdpSocketFactory", sinkSocket);
+  PacketSinkHelper packetSinkHelper("ns3::TcpSocketFactory", sinkSocket);
 
-  OnOffHelper onOffHelper("ns3::UdpSocketFactory", sinkSocket);
+  OnOffHelper onOffHelper("ns3::TcpSocketFactory", sinkSocket);
   onOffHelper.SetConstantRate(offeredLoad, packetSize);
 
   // Configure applications

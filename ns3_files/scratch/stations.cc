@@ -448,9 +448,9 @@ void InstallTrafficGenerator(Ptr<ns3::Node> fromNode, Ptr<ns3::Node> toNode, uin
   // Configure source and sink
   InetSocketAddress sinkSocket(addr, port);
   sinkSocket.SetTos(tosValue);
-  PacketSinkHelper packetSinkHelper("ns3::UdpSocketFactory", sinkSocket);
+  PacketSinkHelper packetSinkHelper("ns3::TcpSocketFactory", sinkSocket);
 
-  OnOffHelper onOffHelper("ns3::UdpSocketFactory", sinkSocket);
+  OnOffHelper onOffHelper("ns3::TcpSocketFactory", sinkSocket);
   onOffHelper.SetConstantRate(offeredLoad, packetSize);
 
   // Configure applications
