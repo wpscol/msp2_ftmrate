@@ -54,7 +54,7 @@ run-moving: createoutput
 		--wallInterval=0 \
 		--wallLoss=0
 
-run-stations:
+run-stations: createout
 	$(NS3_STATIONS_BIN) \
 		--manager="ns3::MinstrelHtWifiManager" \
 		--managerName="mistrel-ht" \
